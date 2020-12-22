@@ -113,3 +113,35 @@ class Car:
 
     def get_reward(self):
         return self.distance / 50.0
+
+    def update(self, road):
+        # set some fixed speed
+        self.speed = 5
+
+        # rotate
+        self.rotate(self.angle)
+
+        # move
+        self.pos[0] += math.cos(math.radians(360 - self.angle)) * self.speed
+        if self.pos[0] < 20:
+            self.pos[0] = 20
+        elif self.pos[0] > width - 120:
+            self.pos[0] = width - 120
+
+        self.pos[1] += math.sin(math.radians(360 - self.angle)) * self.speed
+        if self.pos[1] < 20:
+            self.pos[1] = 20
+        elif self.pos[1] > height - 120:
+            self.pos[1] = height - 120
+
+        # update distance & time spent
+        self.distance += self.speed
+        self.time_spent += 1  # aka turns
+
+        # compute/check collision points & create radars
+        self.compute_collision_points()
+        self.check_collision(road)
+
+        self.radars.clear()
+        for d in range(-90, 120, 45):
+            self.compute_radars(d, road)
