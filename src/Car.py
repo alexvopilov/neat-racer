@@ -24,3 +24,15 @@ class Car:
         self.car = self.car_sprite
         self.pos = [650, 930]
         self.find_pivot()
+    def draw(self, screen):
+        screen.blit(self.car, self.pos)
+        self.draw_radars(screen)
+
+    def draw_radars(self, screen):
+        for r in self.radars:
+            p, d = r
+            pygame.draw.line(screen, (183, 235, 70), self.center, p, 1)
+            pygame.draw.circle(screen, (183, 235, 70), p, 5)
+
+    def draw_center(self, screen):
+        pygame.draw.circle(screen, (0, 72, 186), (math.floor(self.center[0]), math.floor(self.center[1])), 5)
