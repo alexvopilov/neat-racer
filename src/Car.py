@@ -101,5 +101,15 @@ class Car:
         rot_image = rot_image.subsurface(rot_rect).copy()
 
         self.car = rot_image
+
+    def get_data(self):
+        radars = self.radars
+        data = [0, 0, 0, 0, 0]
+
+        for i, r in enumerate(radars):
+            data[i] = int(r[1] / 30)
+
+        return data
+
     def get_reward(self):
         return self.distance / 50.0
