@@ -72,6 +72,17 @@ class Car:
               self.center[1] + math.sin(math.radians(360 - (self.angle + 340))) * lh]
 
         self.collision_points = [lt, rt, lb, rb]
+
+    def draw_collision_points(self, road, screen):
+        if not self.collision_points:
+            self.compute_collision_points()
+
+        for p in self.collision_points:
+            if (road.get_at((int(p[0]), int(p[1]))) == bg):
+                pygame.draw.circle(screen, (255, 0, 0), (int(p[0]), int(p[1])), 5)
+            else:
+                pygame.draw.circle(screen, (15, 192, 252), (int(p[0]), int(p[1])), 5)
+
     def check_collision(self, road):
         self.is_alive = True
         for p in self.collision_points:
@@ -81,6 +92,7 @@ class Car:
                     break
             except IndexError:
                 self.is_alive = False
+
     def rotate(self, angle):
         orig_rect = self.car_sprite.get_rect()
         rot_image = pygame.transform.rotate(self.car_sprite, angle)
