@@ -1,6 +1,8 @@
 import math
 import pygame
 
+bg = (213, 193, 154, 255)
+
 class Car:
     def __init__(self):
         self.angle = 0
@@ -40,3 +42,18 @@ class Car:
 
     def draw_center(self, screen):
         pygame.draw.circle(screen, (0, 72, 186), (math.floor(self.center[0]), math.floor(self.center[1])), 5)
+    def compute_collision_points(self):
+        self.find_pivot()
+        lw = 65
+        lh = 65
+
+        lt = [self.center[0] + math.cos(math.radians(360 - (self.angle + 20))) * lw,
+              self.center[1] + math.sin(math.radians(360 - (self.angle + 20))) * lh]
+        rt = [self.center[0] + math.cos(math.radians(360 - (self.angle + 160))) * lw,
+              self.center[1] + math.sin(math.radians(360 - (self.angle + 160))) * lh]
+        lb = [self.center[0] + math.cos(math.radians(360 - (self.angle + 200))) * lw,
+              self.center[1] + math.sin(math.radians(360 - (self.angle + 200))) * lh]
+        rb = [self.center[0] + math.cos(math.radians(360 - (self.angle + 340))) * lw,
+              self.center[1] + math.sin(math.radians(360 - (self.angle + 340))) * lh]
+
+        self.collision_points = [lt, rt, lb, rb]
