@@ -24,6 +24,10 @@ class Car:
         self.car = self.car_sprite
         self.pos = [650, 930]
         self.find_pivot()
+
+    def find_pivot(self):
+        self.center = (self.pos[0] + (self.car.get_size()[0] / 2), self.pos[1] + (self.car.get_size()[1] / 2))
+
     def draw(self, screen):
         screen.blit(self.car, self.pos)
         self.draw_radars(screen)
