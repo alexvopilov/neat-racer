@@ -81,5 +81,13 @@ class Car:
                     break
             except IndexError:
                 self.is_alive = False
+    def rotate(self, angle):
+        orig_rect = self.car_sprite.get_rect()
+        rot_image = pygame.transform.rotate(self.car_sprite, angle)
+        rot_rect = orig_rect.copy()
+        rot_rect.center = rot_image.get_rect().center
+        rot_image = rot_image.subsurface(rot_rect).copy()
+
+        self.car = rot_image
     def get_reward(self):
         return self.distance / 50.0
