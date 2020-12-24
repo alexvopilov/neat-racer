@@ -2,6 +2,10 @@ import math
 import pygame
 
 bg = (213, 193, 154, 255)
+width = 1920
+height = 1080
+generation = 0
+start = False
 
 class Car:
     def __init__(self):
@@ -19,7 +23,7 @@ class Car:
         self.random_sprite()
 
     def random_sprite(self):
-        self.car_sprite = pygame.image.load('../res/car.png')
+        self.car_sprite = pygame.image.load('res/car.png')
         self.car_sprite = pygame.transform.scale(self.car_sprite,
                                                  (math.floor(self.car_sprite.get_size()[0] / 2),
                                                   math.floor(self.car_sprite.get_size()[1] / 2)))
