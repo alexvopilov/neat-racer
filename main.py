@@ -49,3 +49,25 @@ class Car:
 			pygame.draw.line(screen,(183,235,70),self.center,p,1)
 			pygame.draw.circle(screen,(183,235,70),p,5)
 
+start=False
+def run_generation(genomes,config):
+	nets=[]
+	cars=[]
+
+	for i,g in genomes:
+		net=neat.nn.FeedForwardNetwork.create(g,config)
+		nets.append(net)
+		g.fitness=0
+		cars.append(Car())
+
+	pygame.init()
+	screen=pygame.display.set_mode((width,height))
+	clock=pygame.time.Clock()
+	road=pygame.image.load('res/road.png')
+
+	font=pygame.font.SysFont("Roboto",40)
+	heading_font=pygame.font.SysFont("Roboto",80)
+
+	global generation
+	global start
+	generation+=1
