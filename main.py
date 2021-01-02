@@ -71,3 +71,49 @@ def run_generation(genomes,config):
 	global generation
 	global start
 	generation+=1
+
+	while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit(0)
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_SPACE:
+					start=True
+
+		if not start:
+			continue
+
+		for i,car in enumerate(cars):
+			output=nets[i].activate(car.get_data())
+			i=output.index(max(output))
+
+			if i == 0:
+				car.angle+=5
+			elif i == 1:
+				car.angle=car.angle
+			elif i == 2:
+				car.angle-=5
+
+		cars_left=0
+		for i,car in enumerate(cars):
+			if car.is_alive:
+				cars_left+=1
+				car.update(road)
+				genomes[i][1].fitness+=car.get_reward()
+
+		if not cars_left:
+			break
+
+		screen.blit(road,(0,0))
+
+		for car in cars:
+			if car.is_alive:
+				car.draw(screen)
+
+		label=heading_font.render("Поколение: "+str(generation),True,(73,168,70))
+		label_rect=label.get_rect()
+		label_rect.center=(width / 1.5,300)
+		screen.blit(label,label_rect)
+
+		pygame.display.flip()
+		clock.tick(0)
