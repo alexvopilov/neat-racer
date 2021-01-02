@@ -117,3 +117,9 @@ def run_generation(genomes,config):
 
 		pygame.display.flip()
 		clock.tick(0)
+
+config_path="config-feedforward.txt"
+config=neat.config.Config(neat.DefaultGenome,neat.DefaultReproduction,neat.DefaultSpeciesSet,neat.DefaultStagnation,config_path)
+
+p=neat.Population(config)
+p.run(run_generation,1000)
